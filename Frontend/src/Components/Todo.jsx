@@ -1,6 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import TodoCard from "./TodoCard";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import TodoUpdate from "./TodoUpdate";
 
 export default function Todo() {
   const [show, setShow] = useState(false);
@@ -17,21 +20,31 @@ export default function Todo() {
   };
 
   const [todoArray, setTodoArray] = useState([]);
+
   const submit = () => {
-    setTodoArray([...todoArray, input]);
-    setInput({ title: "", description: "" });
-    console.log(todoArray);
+    if (input.title === "" && input.description === "") {
+      toast.error("🦄 Please Fill All The Fields");
+    } else {
+      setTodoArray([...todoArray, input]);
+      setInput({ title: "", description: "" });
+      // console.log(todoArray);
+      toast.success("🦄 Todo Added Successfully");
+      toast.error(
+        "Task Is Added But Not Saved Please Sign In To Save The Task"
+      );
+    }
   };
   return (
     <>
-      <div className="flex flex-col items-center justify-center p-20 ">
-        <div className="shadow-2xl p-6 border dark:rounded-lg flex flex-col items-center justify-center h-2/3 gap-10 w-96 ">
+      <div className="relative flex flex-col items-center justify-center p-10 ">
+        <div className="shadow-2xl p-6 border dark:rounded-lg flex flex-col items-center justify-center h-2/3 gap-10 min-w-full ">
           <div className="space-y-2">
             <h2 className="text-lg font-medium leading-none">My Task</h2>
             <p className="text-sm text-gray-500 dark:text-gray-400">
               Enter the title and description of your task.
             </p>
           </div>
+          <ToastContainer />
           <div className="grid w-full max-w-sm items-center gap-1.5 mt-4">
             <label
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -79,19 +92,28 @@ export default function Todo() {
           </button>
         </div>
       </div>
-      <div className="h-auto w-full p-10">
-        <h1>Add Your Task Here</h1>
+      <div className="h-auto w-full p-10 flex flex-col items-center justify-center">
+        <h1 className="text-2xl">Your Task</h1>
         <div className="h-auto w-full flex flex-row flex-wrap items-start justify-start">
-        {todoArray.length > 0
-          ? todoArray.map((item, index) => (
-              <TodoCard
-                title={item.title}
-                description={item.description}
-                key={index}
-              />
-            ))
-          : `Please Add Some Todos`}
-          </div>
+          {todoArray.length > 0
+            ? todoArray.map((item, index) => (
+                <TodoCard
+                  title={item.title}
+                  description={item.description}
+                  key={index}
+                  id={index}
+                  deleteId={(id) => {
+                    // console.log(id)
+                    todoArray.splice(id, "1");
+                    setTodoArray([...todoArray]);
+                  }}
+                />
+              ))
+            : `Please Add Some Todos`}
+        </div>
+      </div>
+      <div className="w-full absolute top-[100px] left-0 flex flex-col items-center justify-center">
+        <TodoUpdate/>
       </div>
     </>
   );
