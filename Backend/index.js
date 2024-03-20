@@ -1,11 +1,13 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
+const cors = require("cors");
 const app = express();
 require("./db/index.js");
 const auth = require("./routes/auth.js");
 const list = require("./routes/list.js");
 app.use(express.json());
+app.use(cors());
 
 
 app.get("/", (req, res) => {

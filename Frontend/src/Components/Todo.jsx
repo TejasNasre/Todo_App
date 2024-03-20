@@ -4,6 +4,7 @@ import TodoCard from "./TodoCard";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TodoUpdate from "./TodoUpdate";
+import {displayUpdate} from "./TodoCard";
 
 export default function Todo() {
   const [show, setShow] = useState(false);
@@ -37,7 +38,7 @@ export default function Todo() {
   return (
     <>
       <div className="relative flex flex-col items-center justify-center p-10 ">
-        <div className="shadow-2xl p-6 border dark:rounded-lg flex flex-col items-center justify-center h-2/3 gap-10 min-w-full ">
+        <div className="shadow-2xl p-6 border dark:rounded-lg flex flex-col items-center justify-center h-2/3 gap-5 min-w-full ">
           <div className="space-y-2">
             <h2 className="text-lg font-medium leading-none">My Task</h2>
             <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -45,7 +46,7 @@ export default function Todo() {
             </p>
           </div>
           <ToastContainer />
-          <div className="grid w-full max-w-sm items-center gap-1.5 mt-4">
+          <div className="grid w-full max-w-sm items-center gap-1.5 mt-0">
             <label
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               htmlFor="title"
@@ -111,9 +112,6 @@ export default function Todo() {
               ))
             : `Please Add Some Todos`}
         </div>
-      </div>
-      <div className="w-full absolute top-[100px] left-0 flex flex-col items-center justify-center">
-        <TodoUpdate/>
       </div>
     </>
   );

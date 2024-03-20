@@ -8,6 +8,7 @@ import Contact from "./Components/Contact.jsx";
 import SignIn from "./Components/SignIn.jsx";
 import SignUp from "./Components/SignUp.jsx";
 import Todo from './Components/Todo.jsx'
+import TodoUpdate from "./Components/TodoUpdate.jsx";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
       <Route path="sign-in" element={<SignIn />} />
       <Route path="sign-up" element={<SignUp />} />
       <Route path="add-todo" element={<Todo />} />
+      <Route path="/update-todo" element={<TodoUpdate />}/>
     </Route>
   )
 );

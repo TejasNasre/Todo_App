@@ -1,8 +1,18 @@
-import React from "react";
+import React,{useState} from "react";
 import { GrDocumentUpdate } from "react-icons/gr";
 import { AiFillDelete } from "react-icons/ai";
+import {toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
+
+export function displayUpdate() {
+  const [display, setDisplay] = useState('false');
+
+  return setDisplay(!display);
+}
 
 export default function TodoCard({ title, description, id , deleteId}) {
+  
   return (
     <>
       <div className="p-8 h-auto w-auto shadow-xl mr-5">
@@ -13,14 +23,17 @@ export default function TodoCard({ title, description, id , deleteId}) {
           </p>
         </div>
         <div className="flex flex-row mt-5">
-          <div className="flex flex-row cursor-pointer">
+          <Link to="/update-todo">
+          <div className="flex flex-row cursor-pointer" onClick={displayUpdate}>
             <GrDocumentUpdate className="text-xl text-blue-700 mr-1" />
             Update
           </div>
+          </Link>
           <div
             className="ml-4 text-l flex flex-row cursor-pointer"
             onClick={() => {
               deleteId(id);
+              toast.success(`Successfully Deleted Task`);
             }}
           >
             <AiFillDelete className="text-xl text-red-700 mr-1" />

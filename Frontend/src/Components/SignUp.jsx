@@ -1,6 +1,11 @@
 import React from "react";
 
 export default function SignUp() {
+  const [input,setInput] = [{email : "", password : ""}]
+  const change = (e) => {
+  const {name,value}  = e.target;
+  setInput({...input,[name]:value})
+  }
   return (
     <>
       <div className="h-screen flex flex-col items-center justify-center">
@@ -29,6 +34,7 @@ export default function SignUp() {
                 id="email"
                 placeholder="m@example.com"
                 type="email"
+                onClick={change}
               />
             </div>
             <div class="space-y-2">
@@ -43,6 +49,7 @@ export default function SignUp() {
                 id="password"
                 type="password"
                 placeholder="Enter your password"
+                onClick={change}
               />
             </div>
             <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full bg-slate-900 text-white">
