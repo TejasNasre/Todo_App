@@ -3,8 +3,6 @@ import { useState } from "react";
 import TodoCard from "./TodoCard";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TodoUpdate from "./TodoUpdate";
-import {displayUpdate} from "./TodoCard";
 
 export default function Todo() {
   const [show, setShow] = useState(false);

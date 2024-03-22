@@ -11,12 +11,25 @@ import { CgProfile } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import App from "../App";
 import Home from "./Home.jsx";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { authActions } from "../store/index.js";
 
 export default function Navbar() {
+  const dispatch = useDispatch();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  // console.log(isLoggedIn)
+
+  const logoutFun = () => {
+    sessionStorage.clear("id");
+    dispatch(authActions.logout());
   };
 
   return (
@@ -24,7 +37,7 @@ export default function Navbar() {
       <nav className="bg-white dark:bg-gray-900  w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link
-            to='/'
+            to="/"
             className="flex flex-row items-center justify-center space-x-3 rtl:space-x-reverse"
           >
             <svg
@@ -55,7 +68,7 @@ export default function Navbar() {
               className="hidden  h-10 items-center justify-center rounded-md border border-gray-200 bg-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300 mr-2"
             >
               <FaSignOutAlt />
-              Sign Up
+              Sign In
             </button>
             <CgProfile className="text-2xl" />
             <button
@@ -86,14 +99,15 @@ export default function Navbar() {
           </div>
           <div
             className={`items-center justify-between  w-full md:flex md:w-auto md:order-1 ${
-              isOpen ? "block" : "hidden"}`}
+              isOpen ? "block" : "hidden"
+            }`}
             id="navbar-sticky"
           >
             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li className="flex flex-row items-center justify-center">
                 <IoIosHome />
                 <Link
-                  to='/'
+                  to="/"
                   className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 ml-2"
                   aria-current="page"
                 >
@@ -103,7 +117,7 @@ export default function Navbar() {
               <li className="flex flex-row items-center justify-center">
                 <MdRoundaboutRight />
                 <Link
-                  to='/about'
+                  to="/about"
                   className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ml-2"
                 >
                   About
@@ -112,30 +126,35 @@ export default function Navbar() {
               <li className="flex flex-row items-center justify-center">
                 <IoIosContact />
                 <Link
-                  to='/contact'
+                  to="/contact"
                   className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ml-1"
                 >
                   Contact
                 </Link>
               </li>
-              <li className="flex flex-row items-center justify-center">
-                <IoLogIn />
-                <Link
-                  to='/sign-up'
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ml-2"
-                >
-                  Sign Up
-                </Link>
-              </li>
-              <li className="flex flex-row items-center justify-center">
-                <RiLogoutBoxFill />
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ml-1"
-                >
-                  Log Out
-                </a>
-              </li>
+              {!isLoggedIn && (
+                <li className="flex flex-row items-center justify-center">
+                  <IoLogIn />
+                  <Link
+                    to="/sign-in"
+                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ml-2"
+                  >
+                    Sign In
+                  </Link>
+                </li>
+              )}
+              {isLoggedIn && (
+                <li className="flex flex-row items-center justify-center">
+                  <RiLogoutBoxFill />
+                  <Link
+                    to="/"
+                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ml-1"
+                    onClick={logoutFun}
+                  >
+                    Log Out
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>

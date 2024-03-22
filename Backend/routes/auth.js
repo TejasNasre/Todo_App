@@ -8,9 +8,11 @@ router.post("/register", async (req, res) => {
     const { username, email, password } = req.body;
     const hashPassword = bcrypt.hashSync(password);
     const user = new User({ username, email, password: hashPassword });
-    await user.save().then(() => res.status(200).json({ message: "Sign Up Successful !"}));
+    await user
+      .save()
+      .then(() => res.status(201).json({ message: "Sign Up Successful !" }));
   } catch (error) {
-    const err = res.status(200).json({ messgae: "User Already Exist !" });
+    const err = res.status(200).json({ message: "User Already Exist !" });
   }
 });
 
@@ -19,7 +21,7 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     // console.log(user);
     if (!user) {
-      res.status(400).json({ message: "Please Register First" });
+      res.status(200).json({ message: "Please Register First" });
     }
 
     const isPasswordCorrect = bcrypt.compareSync(
@@ -27,12 +29,12 @@ router.post("/login", async (req, res) => {
       user.password
     );
     if (!isPasswordCorrect) {
-      res.status(400).json({ message: "Invalid Password" });
+      res.status(200).json({ message: "Invalid Password" });
     }
     const { password, ...others } = user._doc;
-    res.status(200).json({ others });
+    res.status(200).json({ message : "SuccessFully Login" , others });
   } catch (error) {
-    res.status(400).json({ message: "Invalid User" });
+    res.status(200).json({ message: "Invalid User" });
   }
 });
 
