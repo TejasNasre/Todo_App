@@ -4,6 +4,7 @@ import TodoCard from "./TodoCard";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+export let toUpdateArray = [];
 
 export default function Todo() {
   const [show, setShow] = useState(false);
@@ -22,18 +23,22 @@ export default function Todo() {
 
   const deleteTodo = async (cardId) => {
     // console.log(id);
-    await axios
-      .delete(`http://localhost:3000/api/v2/delete-task/${cardId}`, {
-        data: { id: id },
-      })
-      .then((res) => {
-        toast.success("🦄 Todo Deleted Successfully");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    todoArray.splice(id, "1");
-    setTodoArray([...todoArray]);
+    if (id) {
+      await axios
+        .delete(`http://localhost:3000/api/v2/delete-task/${cardId}`, {
+          data: { id: id },
+        })
+        .then((res) => {
+          toast.success("🦄 Todo Deleted Successfully");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      // todoArray.splice(id, "1");
+      // setTodoArray([...todoArray]);
+    } else {
+      toast.error("🦄 Please Sign In To Delete The Task");
+    }
   };
 
   const submit = async () => {
@@ -87,12 +92,12 @@ export default function Todo() {
 
   return (
     <>
-      <div className="relative flex flex-col items-center justify-center p-10 ">
+      <div className="relative flex flex-col items-center justify-center p-10 bg-[#111827] text-white">
         <div className="shadow-2xl p-6 border dark:rounded-lg flex flex-col items-center justify-center h-2/3 gap-5 min-w-full ">
           <div className="space-y-2">
-            <h2 className="text-lg font-medium leading-none">My Task</h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Enter the title and description of your task.
+            <h2 className="text-lg font-medium leading-none">My Todo</h2>
+            <p className="text-sm text-white dark:text-gray-400">
+              Enter the title and description of your Todo.
             </p>
           </div>
           <ToastContainer />
@@ -104,7 +109,7 @@ export default function Todo() {
               Title
             </label>
             <input
-              className="shadow-xl flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              className="shadow-xl flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 bg-slate-100 text-[#111827]"
               id="title"
               placeholder="Title"
               onClick={showDes}
@@ -126,7 +131,7 @@ export default function Todo() {
               className={
                 show == false
                   ? `hidden`
-                  : `shadow-xl flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[100px]`
+                  : `shadow-xl flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[100px] bg-slate-100 text-[#111827]`
               }
               id="description"
               placeholder="Description"
@@ -136,16 +141,16 @@ export default function Todo() {
             ></textarea>
           </div>
           <button
-            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 bg-slate-900 text-white"
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 bg-slate-100 text-[#111827]"
             onClick={submit}
           >
             Add Todo
           </button>
         </div>
       </div>
-      <div className="h-auto w-full p-10 flex flex-col items-center justify-center">
-        <h1 className="text-2xl">Your Task</h1>
-        <div className="h-auto w-full flex flex-row flex-wrap items-start justify-start">
+      <div className="h-auto w-full p-10 flex flex-col items-center justify-center bg-[#111827] text-white border-slate-100">
+        <h1 className="text-2xl">Your Todo</h1>
+        <div className="h-auto w-full flex flex-row flex-wrap items-start justify-start gap-8 border-slate-100">
           {todoArray && todoArray.length > 0
             ? todoArray.map((item, index) => (
                 <TodoCard
@@ -154,6 +159,10 @@ export default function Todo() {
                   key={index}
                   id={item._id}
                   deleteId={deleteTodo}
+                  updateId={item._id}
+                  toBeUpdate={() => {
+                    toUpdateArray = todoArray[index];
+                  }}
                 />
               ))
             : `Please Add Some Todos`}

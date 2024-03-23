@@ -5,7 +5,7 @@ const List = require("../models/list.model.js");
 //Task Creation ----> Create
 router.post("/add-task", async (req, res) => {
   try {
-    const { title, description,id } = req.body;
+    const { title, description, id } = req.body;
     const isUserExist = await User.findById(id);
     if (isUserExist) {
       const list = new List({ title, description, user: isUserExist });
@@ -21,15 +21,12 @@ router.post("/add-task", async (req, res) => {
 //Task Update -------> Update
 router.put("/update-task/:id", async (req, res) => {
   try {
-    const { title, description, email } = req.body;
-    const isUserExist = await User.findOne({ email });
-    if (isUserExist) {
-      const list = await List.findByIdAndUpdate(req.params.id, {
-        title,
-        description,
-      });
-      list.save().then(() => res.status(200).json({ message: "Task Updated" }));
-    }
+    const { title, description } = req.body;
+    const list = await List.findByIdAndUpdate(req.params.id, {
+      title,
+      description,
+    });
+    list.save().then(() => res.status(200).json({ message: "Task Updated" }));
   } catch (error) {
     res.status(400).json({ message: "Invalid User" });
   }
@@ -39,9 +36,9 @@ router.put("/update-task/:id", async (req, res) => {
 router.delete("/delete-task/:id", async (req, res) => {
   try {
     const { id } = req.body;
-    const isUserExist = await User.findByIdAndUpdate(id,
-      { $pull: { list: req.params.id } }
-    );
+    const isUserExist = await User.findByIdAndUpdate(id, {
+      $pull: { list: req.params.id },
+    });
     if (isUserExist) {
       await List.findByIdAndDelete(req.params.id).then(() => {
         res.status(200).json({ message: "Task Deleted" });
@@ -55,13 +52,14 @@ router.delete("/delete-task/:id", async (req, res) => {
 //Get All Task -------> Read
 router.get("/get-all-task/:id", async (req, res) => {
   try {
-   const list = await List.find({ user: req.params.id }).sort({ createdAt: -1 });
-   if(list.length !== 0){
-    res.status(200).json({ list: list });
-   }
-   else{
-    res.status(200).json({ message: "Please Add Task" });
-   }
+    const list = await List.find({ user: req.params.id }).sort({
+      createdAt: -1,
+    });
+    if (list.length !== 0) {
+      res.status(200).json({ list: list });
+    } else {
+      res.status(200).json({ message: "Please Add Task" });
+    }
   } catch (error) {
     res.status(400).json({ message: "Invalid User No Task Found" });
   }

@@ -3,15 +3,14 @@ import React from "react";
 export default function Contact() {
   return (
     <>
-      <section class="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+      <section class="w-full text-white py-12 md:py-24 lg:py-32 bg-[#111827] dark:bg-gray-800">
         <div class="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
           <div class="space-y-3">
             <h2 class="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-              Experience the workflow the best frontend teams love.
+            Connect With Us Online
             </h2>
             <p class="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Let your team focus on shipping features instead of managing
-              infrastructure with automated CI/CD.
+            Follow us on social media to stay updated with the latest news, updates, and tips from our team. Join our online community and be part of the conversation!
             </p>
           </div>
           <div class="mx-auto w-full max-w-sm space-y-2">

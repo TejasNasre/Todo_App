@@ -3,38 +3,40 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
-    <>
-      <div className="flex flex-col min-h-[100dvh]">
-        <main className="flex-1">
-          <section className="flex flex-col items-center justify-center h-screen py-6 space-y-4">
-            <div className="flex flex-col items-center space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                Your tasks, beautifully simple
-              </h1>
-              <p className="max-w-[600px] text-center text-gray-500 md:text-xl/relaxed dark:text-gray-400">
-                The only task manager you'll ever need. It's simple, fast, and
-                easy to use. Get more done with less effort.
-              </p>
-            </div>
-            <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Link
-                className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-                to='/sign-up'
-                rel="ugc"
-              >
-                Sign Up
-              </Link>
-              <a
-                className="inline-flex h-10 items-center justify-center rounded-md border border-gray-200 bg-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300"
-                href="#"
-                rel="ugc"
-              >
-                Learn more
-              </a>
-            </div>
-          </section>
-        </main>
+   <>
+   <section className="bg-gray-900 text-white h-[100vh]">
+  <div className="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center">
+    <div className="mx-auto max-w-3xl text-center">
+      <h1
+        className="bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 bg-clip-text text-3xl font-extrabold text-transparent sm:text-5xl"
+      >
+        Simplify Your Life,
+
+        <span className="sm:block"> Achieve More: Welcome to TodoZen </span>
+      </h1>
+
+      <p className="mx-auto mt-4 max-w-xl sm:text-xl/relaxed">
+      Welcome to TodoZen, your ultimate companion for mastering task management and reclaiming your productivity. Life is full of tasks, but with TodoZen, navigating through them seamlessly becomes a breeze.
+      </p>
+
+      <div className="mt-8 flex flex-wrap justify-center gap-4">
+        <Link
+          className="block w-full rounded border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-white focus:outline-none focus:ring active:text-opacity-75 sm:w-auto"
+          to="/sign-up"
+        >
+          Sign Up
+        </Link>
+
+        <Link
+          className="block w-full rounded border border-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring active:bg-blue-500 sm:w-auto"
+          to="/sign-in"
+        >
+          Sign In
+        </Link>
       </div>
-    </>
+    </div>
+  </div>
+</section>
+   </>
   );
 }
