@@ -27,7 +27,7 @@ const router = createBrowserRouter(
       <Route path="sign-in" element={<SignIn />} />
       <Route path="sign-up" element={<SignUp />} />
       <Route path="add-todo" element={<Todo />} />
-      <Route path="/update-todo" element={<TodoUpdate />}/>
+      <Route path="update-todo" element={<TodoUpdate />}/>
     </Route>
   )
 );

@@ -1,38 +1,90 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import TodoCard from "./TodoCard";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 export default function Todo() {
   const [show, setShow] = useState(false);
+  const [input, setInput] = useState({ title: "", description: "" });
+  const [todoArray, setTodoArray] = useState([]);
+  const id = sessionStorage.getItem("id");
 
   const showDes = () => {
     setShow(!show);
   };
-
-  const [input, setInput] = useState({ title: "", description: "" });
 
   const change = (e) => {
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
   };
 
-  const [todoArray, setTodoArray] = useState([]);
+  const deleteTodo = async (cardId) => {
+    // console.log(id);
+    await axios
+      .delete(`http://localhost:3000/api/v2/delete-task/${cardId}`, {
+        data: { id: id },
+      })
+      .then((res) => {
+        toast.success("🦄 Todo Deleted Successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    todoArray.splice(id, "1");
+    setTodoArray([...todoArray]);
+  };
 
-  const submit = () => {
+  const submit = async () => {
     if (input.title === "" && input.description === "") {
       toast.error("🦄 Please Fill All The Fields");
     } else {
-      setTodoArray([...todoArray, input]);
-      setInput({ title: "", description: "" });
-      // console.log(todoArray);
-      toast.success("🦄 Todo Added Successfully");
-      toast.error(
-        "Task Is Added But Not Saved Please Sign In To Save The Task"
-      );
+      if (id) {
+        await axios
+          .post("http://localhost:3000/api/v2/add-task", {
+            title: input.title,
+            description: input.description,
+            id: id,
+          })
+          .then((res) => {
+            // console.log(res.data);
+            toast.success("🦄 Todo Added Successfully");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        setInput({ title: "", description: "" });
+        // console.log(todoArray);
+      } else {
+        setTodoArray([...todoArray, input]);
+        setInput({ title: "", description: "" });
+        // console.log(todoArray);
+        toast.success("🦄 Todo Added Successfully");
+        toast.error(
+          "Task Is Added But Not Saved Please Sign In To Save The Task"
+        );
+      }
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (id) {
+        await axios
+          .get(`http://localhost:3000/api/v2/get-all-task/${id}`)
+          .then((res) => {
+            // console.log(res);
+            setTodoArray(res.data.list);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    };
+    fetchData();
+  }, [submit]);
+
   return (
     <>
       <div className="relative flex flex-col items-center justify-center p-10 ">
@@ -94,18 +146,14 @@ export default function Todo() {
       <div className="h-auto w-full p-10 flex flex-col items-center justify-center">
         <h1 className="text-2xl">Your Task</h1>
         <div className="h-auto w-full flex flex-row flex-wrap items-start justify-start">
-          {todoArray.length > 0
+          {todoArray && todoArray.length > 0
             ? todoArray.map((item, index) => (
                 <TodoCard
                   title={item.title}
                   description={item.description}
                   key={index}
-                  id={index}
-                  deleteId={(id) => {
-                    // console.log(id)
-                    todoArray.splice(id, "1");
-                    setTodoArray([...todoArray]);
-                  }}
+                  id={item._id}
+                  deleteId={deleteTodo}
                 />
               ))
             : `Please Add Some Todos`}

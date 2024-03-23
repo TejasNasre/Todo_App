@@ -7,6 +7,7 @@ import { IoLogIn } from "react-icons/io5";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import { FaSignOutAlt } from "react-icons/fa";
 import { RiCalendarTodoFill } from "react-icons/ri";
+import { LuListTodo } from "react-icons/lu";
 import { CgProfile } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import App from "../App";
@@ -133,27 +134,49 @@ export default function Navbar() {
                 </Link>
               </li>
               {!isLoggedIn && (
-                <li className="flex flex-row items-center justify-center">
-                  <IoLogIn />
-                  <Link
-                    to="/sign-in"
-                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ml-2"
-                  >
-                    Sign In
-                  </Link>
-                </li>
+                <>
+                  <li className="flex flex-row items-center justify-center">
+                    <LuListTodo />
+                    <Link
+                      to="/add-todo"
+                      className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ml-2"
+                    >
+                      Add Todo
+                    </Link>
+                  </li>
+                  <li className="flex flex-row items-center justify-center">
+                    <IoLogIn />
+                    <Link
+                      to="/sign-in"
+                      className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ml-2"
+                    >
+                      Sign In
+                    </Link>
+                  </li>
+                </>
               )}
               {isLoggedIn && (
-                <li className="flex flex-row items-center justify-center">
-                  <RiLogoutBoxFill />
-                  <Link
-                    to="/"
-                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ml-1"
-                    onClick={logoutFun}
-                  >
-                    Log Out
-                  </Link>
-                </li>
+                <>
+                  <li className="flex flex-row items-center justify-center">
+                    <LuListTodo />
+                    <Link
+                      to="/add-todo"
+                      className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ml-1"
+                    >
+                      Add Todo
+                    </Link>
+                  </li>
+                  <li className="flex flex-row items-center justify-center">
+                    <RiLogoutBoxFill />
+                    <Link
+                      to="/"
+                      className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ml-1"
+                      onClick={logoutFun}
+                    >
+                      Log Out
+                    </Link>
+                  </li>
+                </>
               )}
             </ul>
           </div>

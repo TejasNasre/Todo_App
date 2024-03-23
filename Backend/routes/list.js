@@ -5,8 +5,8 @@ const List = require("../models/list.model.js");
 //Task Creation ----> Create
 router.post("/add-task", async (req, res) => {
   try {
-    const { title, description, email } = req.body;
-    const isUserExist = await User.findOne({ email });
+    const { title, description,id } = req.body;
+    const isUserExist = await User.findById(id);
     if (isUserExist) {
       const list = new List({ title, description, user: isUserExist });
       await list.save().then(() => res.status(200).json({ list: list }));
@@ -14,7 +14,7 @@ router.post("/add-task", async (req, res) => {
       await isUserExist.save();
     }
   } catch (error) {
-    res.status(400).json({ message: "Invalid User" });
+    res.status(200).json({ message: "Invalid User" });
   }
 });
 
@@ -38,9 +38,8 @@ router.put("/update-task/:id", async (req, res) => {
 //Delete Task -------> Delete
 router.delete("/delete-task/:id", async (req, res) => {
   try {
-    const { email } = req.body;
-    const isUserExist = await User.findOneAndUpdate(
-      { email },
+    const { id } = req.body;
+    const isUserExist = await User.findByIdAndUpdate(id,
       { $pull: { list: req.params.id } }
     );
     if (isUserExist) {
