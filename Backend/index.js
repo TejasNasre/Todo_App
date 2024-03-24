@@ -15,6 +15,7 @@ const corsOrigin = {
 };
 
 app.use(cors(corsOrigin));
+app.options('*', cors(corsOrigin));
 
 
 app.get("/", (req, res) => {
