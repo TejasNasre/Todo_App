@@ -9,7 +9,7 @@ const list = require("./routes/list.js");
 app.use(express.json());
 
 const corsOrigin = {
-  origin: process.env.CORS_ORIGIN,
+  origin: process.env.CORS_ORIGIN.replace(/\/$/, ""), // remove trailing slash
   methods : ["GET", "POST", "PUT", "DELETE"],
   credentials : true
 };
