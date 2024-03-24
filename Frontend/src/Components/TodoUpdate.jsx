@@ -33,7 +33,7 @@ export default function TodoUpdate() {
   const submit = async () => {
     // console.log(input);
     await axios
-      .put(`http://localhost:3000/api/v2/update-task/${updateId}`, input)
+      .put(`https://todo-app-h06k.onrender.com/api/v2/update-task/${updateId}`, input)
       .then((res) => {
         // console.log(res);
         toast.success("🦄 Todo Updated Successfully");

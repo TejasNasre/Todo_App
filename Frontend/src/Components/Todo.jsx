@@ -25,7 +25,7 @@ export default function Todo() {
     // console.log(id);
     if (id) {
       await axios
-        .delete(`http://localhost:3000/api/v2/delete-task/${cardId}`, {
+        .delete(`https://todo-app-h06k.onrender.com/api/v2/delete-task/${cardId}`, {
           data: { id: id },
         })
         .then((res) => {
@@ -47,7 +47,7 @@ export default function Todo() {
     } else {
       if (id) {
         await axios
-          .post("http://localhost:3000/api/v2/add-task", {
+          .post("https://todo-app-h06k.onrender.com/api/v2/add-task", {
             title: input.title,
             description: input.description,
             id: id,
@@ -77,7 +77,7 @@ export default function Todo() {
     const fetchData = async () => {
       if (id) {
         await axios
-          .get(`http://localhost:3000/api/v2/get-all-task/${id}`)
+          .get(`https://todo-app-h06k.onrender.com/api/v2/get-all-task/${id}`)
           .then((res) => {
             // console.log(res);
             setTodoArray(res.data.list);

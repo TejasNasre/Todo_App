@@ -15,7 +15,7 @@ export default function SignUp() {
   const submit = async (e) => {
     e.preventDefault();
     await axios
-      .post("http://localhost:3000/api/v1/register", input)
+      .post("https://todo-app-h06k.onrender.com/api/v1/register", input)
       .then((res) => {
         if (res.data.message === "User Already Exist !") {
           toast.error(res.data.message);
