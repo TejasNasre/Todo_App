@@ -7,7 +7,14 @@ require("./db/index.js");
 const auth = require("./routes/auth.js");
 const list = require("./routes/list.js");
 app.use(express.json());
-app.use(cors());
+
+const corsOrigin = {
+  origin: process.env.CORS_ORIGIN,
+  methods : ["GET", "POST", "PUT", "DELETE"],
+  credentials : true
+};
+
+app.use(cors(corsOrigin));
 
 
 app.get("/", (req, res) => {
